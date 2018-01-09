@@ -2,10 +2,13 @@ package com.divide2.base.service.impl;
 
 import com.divide2.base.service.BaseService;
 import com.divide2.search.SearchQuery;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.io.Serializable;
 import java.util.List;
 
@@ -13,9 +16,9 @@ import java.util.List;
  * Created by bvvy on 2018/1/7.
  * com.divide2.base.service.impl
  */
-public class BaseServiceImpl<T,ID extends Serializable,REPO extends JpaRepository<T,ID>> implements BaseService<T,ID> {
+public abstract class BaseServiceImpl<T,ID extends Serializable,REPO extends JpaRepository<T,ID>> implements BaseService<T,ID> {
 
-
+    @Autowired
     private REPO repo;
 
     @Override
