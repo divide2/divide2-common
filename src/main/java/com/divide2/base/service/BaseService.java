@@ -1,6 +1,7 @@
 package com.divide2.base.service;
 
 import com.divide2.search.SearchQuery;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
