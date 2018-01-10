@@ -1,7 +1,6 @@
 package com.divide2.base.service;
 
-import com.divide2.search.SearchQuery;
-import org.springframework.cache.annotation.Cacheable;
+import com.divide2.search.Queryer;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -62,5 +61,5 @@ public interface BaseService<T,ID extends Serializable> {
      * @return page
      * todo 高级搜索 看怎么实现
      */
-    Page<T> search(SearchQuery query);
+    Page<T> search(Queryer query);
 }
