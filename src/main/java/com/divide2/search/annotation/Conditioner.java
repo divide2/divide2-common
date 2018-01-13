@@ -19,5 +19,7 @@ public @interface Conditioner {
 
     boolean start() default false;
 
+    String ref() default "";
+
 
 }

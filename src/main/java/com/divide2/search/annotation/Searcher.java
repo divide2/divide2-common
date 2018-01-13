@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
 @Target({ElementType.TYPE})
 public @interface Searcher {
 
-    String indexName();
+    Class<?> indexClass();
 
     String value() default "";
 }
