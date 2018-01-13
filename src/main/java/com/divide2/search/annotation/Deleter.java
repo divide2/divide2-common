@@ -9,10 +9,8 @@ import java.lang.annotation.Target;
  * create by bvvy
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.TYPE})
-public @interface Searcher {
-
-    String indexName();
+@Target({ElementType.METHOD})
+public @interface Deleter {
 
     String value() default "";
 }

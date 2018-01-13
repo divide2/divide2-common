@@ -6,13 +6,10 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * create by bvvy
+ * Created by bvvy on 2018/1/10.
+ * com.divide2.search.annotation
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.TYPE})
-public @interface Searcher {
-
-    String indexName();
-
-    String value() default "";
+@Target({ElementType.METHOD})
+public @interface Inserter {
 }

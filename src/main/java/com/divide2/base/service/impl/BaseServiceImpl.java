@@ -1,10 +1,13 @@
 package com.divide2.base.service.impl;
 
 import com.divide2.base.service.BaseService;
-import com.divide2.search.SearchQuery;
+import com.divide2.search.Queryer;
+import com.divide2.search.annotation.Deleter;
+import com.divide2.search.annotation.Inserter;
+import com.divide2.search.annotation.Updater;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -21,16 +24,19 @@ public abstract class BaseServiceImpl<T,ID extends Serializable,REPO extends Jpa
     private REPO repo;
 
     @Override
+    @Inserter
     public T add(T t) {
         return repo.save(t);
     }
 
     @Override
+    @Updater
     public T update(T t) {
         return repo.save(t);
     }
 
     @Override
+    @Deleter
     public void delete(ID id) {
         repo.delete(id);
     }
@@ -42,9 +48,7 @@ public abstract class BaseServiceImpl<T,ID extends Serializable,REPO extends Jpa
 
     //todo sort
     @Override
-    @Cacheable(cacheNames = "ddd")
     public List<T> all() {
-
         return repo.findAll();
     }
     //todo sort
@@ -55,7 +59,10 @@ public abstract class BaseServiceImpl<T,ID extends Serializable,REPO extends Jpa
 
     @Override
     //todo 自定义的 search 简化方法 看怎么来方便
-    public Page<T> search(SearchQuery query) {
-        return null;
+
+
+    public Page<T> search(Queryer query) {
+        return repo.findAll(new PageRequest(0, 2));
     }
+
 }
