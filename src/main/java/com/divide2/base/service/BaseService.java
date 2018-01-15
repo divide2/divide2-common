@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by bvvy on 2018/1/7.
@@ -62,4 +63,6 @@ public interface BaseService<T,ID extends Serializable> {
      * todo 高级搜索 看怎么实现
      */
     Page<T> search(Queryer query);
+
+    Page<T> search(Map<String,String> conditions);
 }

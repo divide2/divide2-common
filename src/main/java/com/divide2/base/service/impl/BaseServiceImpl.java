@@ -13,6 +13,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by bvvy on 2018/1/7.
@@ -43,7 +44,7 @@ public abstract class BaseServiceImpl<T,ID extends Serializable,REPO extends Jpa
 
     @Override
     public T get(ID id) {
-        return repo.getOne(id);
+        return repo.findOne(id);
     }
 
     //todo sort
@@ -62,6 +63,11 @@ public abstract class BaseServiceImpl<T,ID extends Serializable,REPO extends Jpa
 
 
     public Page<T> search(Queryer query) {
+        return repo.findAll(new PageRequest(0, 2));
+    }
+
+    @Override
+    public Page<T> search(Map<String, String> conditions) {
         return repo.findAll(new PageRequest(0, 2));
     }
 

@@ -15,11 +15,8 @@ public @interface Conditioner {
 
     SearchWay way() default SearchWay.EQ;
 
-    boolean end() default false;
+    String startName() default "";
 
-    boolean start() default false;
-
-    String ref() default "";
-
+    String endName() default "";
 
 }
