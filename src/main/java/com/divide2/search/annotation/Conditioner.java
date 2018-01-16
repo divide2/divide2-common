@@ -14,7 +14,7 @@ import java.lang.annotation.Target;
 public @interface Conditioner {
 
 
-    SearchWay way() default SearchWay.EQ;
+    SearchWay way() default SearchWay.LIKE;
 
     String startName() default "";
 

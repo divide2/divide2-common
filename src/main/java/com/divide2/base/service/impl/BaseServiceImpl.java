@@ -93,10 +93,10 @@ public abstract class BaseServiceImpl<T, ID extends Serializable, REPO extends J
             if (conditioner != null) {
                 switch (conditioner.way()) {
                     case EQ: {
-                        queryBuilder.must(QueryBuilders.termQuery(fieldName, conditions.get(fieldName)));
+                        queryBuilder.must(QueryBuilders.matchQuery(fieldName, conditions.get(fieldName)));
                     }
                     case LIKE: {
-                        queryBuilder.must(QueryBuilders.queryStringQuery(fieldName).field(fieldName));
+                        queryBuilder.must(QueryBuilders.fuzzyQuery(fieldName, conditions.get(fieldName)));
                     }
                     case RANGE: {
                         queryBuilder.must(
