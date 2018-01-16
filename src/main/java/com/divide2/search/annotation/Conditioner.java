@@ -13,6 +13,7 @@ import java.lang.annotation.Target;
 
 public @interface Conditioner {
 
+
     SearchWay way() default SearchWay.EQ;
 
     String startName() default "";

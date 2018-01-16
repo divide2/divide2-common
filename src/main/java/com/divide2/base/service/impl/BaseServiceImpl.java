@@ -60,9 +60,8 @@ public abstract class BaseServiceImpl<T,ID extends Serializable,REPO extends Jpa
 
     @Override
     //todo 自定义的 search 简化方法 看怎么来方便
-
-
     public Page<T> search(Queryer query) {
+
         return repo.findAll(new PageRequest(0, 2));
     }
 
