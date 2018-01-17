@@ -1,5 +1,6 @@
 package com.divide2.base.service.impl;
 
+import com.divide2.base.repository.BaseRepository;
 import com.divide2.base.service.BaseService;
 import com.divide2.search.Queryer;
 import com.divide2.search.annotation.Conditioner;
@@ -29,7 +30,7 @@ import java.util.Map;
  * Created by bvvy on 2018/1/7.
  * com.divide2.base.service.impl
  */
-public abstract class BaseServiceImpl<T, ID extends Serializable, REPO extends JpaRepository<T, ID>> implements BaseService<T, ID> {
+public abstract class BaseServiceImpl<T, ID extends Serializable, REPO extends BaseRepository<T, ID>> implements BaseService<T, ID> {
 
     @Autowired
     private REPO repo;
@@ -68,54 +69,14 @@ public abstract class BaseServiceImpl<T, ID extends Serializable, REPO extends J
 
     //todo sort
     @Override
-    public Page<T> page(Pageable pageable) {
-        return repo.findAll(pageable);
-    }
-
-    @Override
-    //todo 自定义的 search 简化方法 看怎么来方便
-    public Page<T> search(Queryer query) {
-        return repo.findAll(new PageRequest(0, 2));
-    }
-
-    @SuppressWarnings("unchecked")
-    private Class<T> getTClz() {
-        return (Class<T>) (((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments()[0]);
+    public Page<T> page(Map<String,String> conditions,Pageable pageable) {
+        return repo.page(conditions,pageable);
     }
 
 
-    @Override
-    public Page<T> search(Map<String, String> conditions) {
-        Field[] fields = getTClz().getDeclaredFields();
-        BoolQueryBuilder queryBuilder = new BoolQueryBuilder();
-        for (Field field : fields) {
-            Conditioner conditioner = field.getAnnotation(Conditioner.class);
-            String fieldName = field.getName();
-            if (conditioner != null) {
-                switch (conditioner.way()) {
-                    case EQ: {
-                        queryBuilder.must(QueryBuilders.matchQuery(fieldName, conditions.get(fieldName)));
-                    }
-                    case LIKE: {
-                        queryBuilder.must(QueryBuilders.regexpQuery(fieldName,".{0,10}"+ conditions.get(fieldName)+".{0,10}"));
-                    }
-                    case RANGE: {
-                        queryBuilder.must(
-                                QueryBuilders.rangeQuery(fieldName)
-                                        .gte(
-                                                conditions.get(conditioner.startName())
-                                        )
-                                        .lte(conditions.get(conditioner.endName()))
-                        );
-                    }
-                }
-            }
-        }
-        SearchQuery searchQuery = new NativeSearchQuery(queryBuilder);
-        Integer page = Integer.parseInt(conditions.get("page"));
-        Integer size = Integer.parseInt(conditions.get("size"));
-        searchQuery.setPageable(new PageRequest(page, size));
-        return elasticsearchTemplate.queryForPage(searchQuery, getTClz());
-    }
+
+
+
+
 
 }

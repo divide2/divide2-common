@@ -48,21 +48,6 @@ public interface BaseService<T,ID extends Serializable> {
      */
     List<T> all();
 
-    /**
-     * 分页
-     * @param pageable 分页信息
-     * @return page
-     * todo 排序
-     */
-    Page<T> page(Pageable pageable);
 
-    /**
-     * 搜索
-     * @param query 条件
-     * @return page
-     * todo 高级搜索 看怎么实现
-     */
-    Page<T> search(Queryer query);
-
-    Page<T> search(Map<String,String> conditions);
+    Page<T> page(Map<String,String> conditions,Pageable pageable);
 }
