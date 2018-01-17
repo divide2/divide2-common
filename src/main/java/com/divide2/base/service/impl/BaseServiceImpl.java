@@ -7,6 +7,7 @@ import com.divide2.search.annotation.Deleter;
 import com.divide2.search.annotation.Inserter;
 import com.divide2.search.annotation.Updater;
 import org.apache.commons.lang.reflect.FieldUtils;
+import org.elasticsearch.common.unit.Fuzziness;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,7 +97,7 @@ public abstract class BaseServiceImpl<T, ID extends Serializable, REPO extends J
                         queryBuilder.must(QueryBuilders.matchQuery(fieldName, conditions.get(fieldName)));
                     }
                     case LIKE: {
-                        queryBuilder.must(QueryBuilders.fuzzyQuery(fieldName, conditions.get(fieldName)));
+                        queryBuilder.must(QueryBuilders.regexpQuery(fieldName,".{0,10}"+ conditions.get(fieldName)+".{0,10}"));
                     }
                     case RANGE: {
                         queryBuilder.must(
